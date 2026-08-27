@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "clue_frame_claim",
+  "version": "${version}",
+  "name": "Clue Frame Claim",
+  "description": "Hold right click on tagged item frames for three seconds to claim their displayed item.",
+  "authors": [
+    "Manus AI"
+  ],
+  "license": "CC0-1.0",
+  "environment": "*",
+  "entrypoints": {
+    "main": [
+      "com.manus.clueframe.ClueFrameClaimMod"
+    ],
+    "client": [
+      "com.manus.clueframe.client.ClueFrameClaimClient"
+    ]
+  },
+  "depends": {
+    "fabricloader": ">=0.19.3",
+    "minecraft": "~1.21.10",
+    "java": ">=21",
+    "fabric-api": "*"
+  }
+}
