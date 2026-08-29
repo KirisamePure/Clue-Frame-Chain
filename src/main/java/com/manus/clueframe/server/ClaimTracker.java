@@ -25,6 +25,7 @@ public final class ClaimTracker {
     public static final String CLUE_FRAME_TAG = "clue_frame";
     public static final int REQUIRED_TICKS = 60;
     private static final double MAX_CLAIM_DISTANCE = 5.0D;
+    private static final int GRACE_TICKS = 5;
     private static final Map<UUID, HoldState> HOLDING_PLAYERS = new HashMap<>();
 
     private ClaimTracker() {
@@ -78,6 +79,19 @@ public final class ClaimTracker {
                 iterator.remove();
                 continue;
             }
+
+            if (!state.receivedSignalThisTick) {
+                state.missedSignalTicks++;
+                if (state.missedSignalTicks > GRACE_TICKS) {
+                    // 只有连续丢失超过 5 tick 信号才真正重置
+                    sendProgress(player, state.entityId, 0, false);
+                    iterator.remove();
+                    continue;
+                }
+            } else {
+                state.missedSignalTicks = 0; // 收到信号则重置丢失计数
+            }
+
             state.receivedSignalThisTick = false;
 
             ItemFrame frame = findEligibleFrame(player, state.entityId);
@@ -132,6 +146,7 @@ public final class ClaimTracker {
     private static final class HoldState {
         private final int entityId;
         private int heldTicks;
+        private int missedSignalTicks;
         private boolean receivedSignalThisTick;
 
         private HoldState(int entityId) {
