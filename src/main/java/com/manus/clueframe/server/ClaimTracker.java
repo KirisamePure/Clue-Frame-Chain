@@ -25,7 +25,7 @@ public final class ClaimTracker {
     public static final String CLUE_FRAME_TAG = "clue_frame";
     public static final int REQUIRED_TICKS = 60;
     private static final double MAX_CLAIM_DISTANCE = 5.0D;
-    private static final int GRACE_TICKS = 5;
+    private static final int GRACE_TICKS = 10;
     private static final Map<UUID, HoldState> HOLDING_PLAYERS = new HashMap<>();
 
     private ClaimTracker() {
